@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block book-list %}
+    <div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-md-4">
+            <h4>注册</h4>
+               <form role="form" class="form-horizontal" action="" method="POST">{% csrf_token %}
+                    {% csrf_token %}
+                    {% for field in form %}
+                      <div class="form-group">
+                      <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                          {% if field.name == 'username' %}
+                          <input type="text" class="form-control"
+                            name="{{ field.name }}"
+                            id="id_{{ field.name }}"
+                          >
+                          {% else %}
+                          <input type="password" class="form-control"
+                            name="{{ field.name }}"
+                            id="id_{{ field.name }}"
+                          >
+                          {% endif %}
+                          <span class="help-block" style="color:indianred">{{ field.errors|join:"," }} </span>
+                      </div>
+                    {% endfor %}
+                <button type="submit" class="btn btn-success">注册</button>&nbsp;
+                <a href="/signin">已有帐号,返回登录</a>
+            </form>
+         </div>
+    </div>
+    </div>
+{% endblock %}

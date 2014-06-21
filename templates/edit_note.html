@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block book-list %}
+    <div class="panel panel-default">
+    <div class="panel-body">
+    {% if note_edit %}
+       <h4>编辑笔记</h4>
+       <div class="col-md-10">
+       <form class="form-horizontal" method="POST">{% csrf_token %}
+           <div class="form-group">
+               <label class="control-label"> {{ form.title.label }} </label>
+               <input type="text" class="form-control" name="title" id="id_title"
+                      value="{{ note_edit.first.title }}">
+           </div>
+           <div class="form-group">
+               <label class="control-label"> {{ form.content.label }} </label>
+               <textarea type="text" class="form-control" rows="10" name="content" id="id_content">{{ note_edit.first.content }}
+               </textarea>
+            </div>
+           <div class="form-group">
+               <button type="submit" class="btn btn-success">保存</button>
+           </div>
+       </form>
+       </div>
+    {% endif %}
+    </div>
+    </div>
+{% endblock %}

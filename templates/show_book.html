@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block book-list %}
+    {% if book_by_isbn %}
+    <div class="panel panel-default">
+    <div class="panel-body">
+           <div class="row">
+           <div class="col-xs-6 col-md-3" style="width: 20%">
+           <div class="thumbnail">
+               <img src="{{ book_by_isbn.thumb_url }}" style="width: 101px; height: 146px">
+           </div>
+           </div>
+           <h3>{{ book_by_isbn.book_title }}</h3>
+               作者：
+               {{ book_by_isbn.book_author }}<br>
+               出版信息：
+               {{ book_by_isbn.book_publisher }}/{{ book_by_isbn.pub_date|date:'Y-m-d' }}<br>
+               借出时间：
+               {{ book_by_isbn.borrow_date|date:'Y-m-d' }}<br>
+           {% if book_by_isbn.is_borrowed == 1 %}
+               最迟归还时间：
+               {{ last_return_date|date:'Y-m-d'}}<br>
+           {% elif book_by_isbn.is_borrowed == 0 %}
+               归还时间：
+               {{ book_by_isbn.return_date|date:'Y-m-d' }}<br>
+           {% endif %}
+           {% if read_time %}
+               读过时段：
+               {% for time in read_time %}
+               {{ time|date:'Y-m-d' }}
+               {% cycle '~' '' %}
+               {% endfor %}
+           {% endif %}
+           </div>
+           <div class="well">
+               <h4>摘要</h4>
+               {{ book_by_isbn.book_summary }}
+           </div>
+
+           <div class="well" id="read_note">
+               <h4>我的读书笔记</h4>
+               {% if book_note  %}
+                   {% for note in book_note %}
+                    <strong>标题:</strong>&nbsp;{{ note.title }}
+                    //&nbsp;{{ note.write_date|date:'Y-m-d' }}&nbsp;
+                    (<a href="/note/edit/{{ book_by_isbn.isbn }}/{{ note.id }}">编辑</a>
+{#                      (<a href="#edit_note" data-toggle="modal">编辑</a>#}
+                    //&nbsp;<a href="/note/delete/{{ book_by_isbn.isbn }}/{{ note.id }}#read_note">删除</a>)
+                    <br>
+                    <strong>内容:</strong>&nbsp;{{ note.content }}
+                    <hr>
+                   {% endfor %}
+               {% else %}
+                   &nbsp;您还没有发表笔记！(<a href="#post_note">点此添加笔记</a> )
+               {% endif %}
+           </div>
+
+
+           <div class="well" id="post_note">
+               <h4>发表笔记</h4>
+               <div class="row">
+               <div class="col-md-8" style="padding-left: 5%">
+               <form class="form-horizontal" method="POST">{% csrf_token %}
+                   <div class="form-group">
+                       <label class="control-label"> {{ form.title.label }} </label>
+                       <input type="text" class="form-control" name="title" id="id_title">
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label"> {{ form.content.label }} </label>
+                       <textarea type="text" class="form-control" rows="5" name="content" id="id_content"></textarea>
+                    </div>
+                   <div class="form-group">
+                       <button type="submit" class="btn btn-success">发表</button>
+                   </div>
+               </form>
+               </div>
+               </div>
+           </div>
+    </div>
+    </div>
+    {% endif %}
+{% endblock %}

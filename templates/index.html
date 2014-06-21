@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block book-list %}
+    <div class="panel panel-default">
+    <div class="panel-body">
+        <h3>在读</h3>
+        <div class="row">
+        {% if book_reading %}
+            {% for book in book_reading %}
+                <div class="col-xs-6 col-md-3" style="width: 20%">
+                <div class="thumbnail"
+                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <a href="book/isbn/{{ book.isbn }}">
+                    <img src="{{ book.thumb_url }}" style="width: 101px; height: 146px">
+                    {{ book.book_title }}<br>
+                </a>
+                <div class="caption" >
+
+                {{ book.book_author }} <br>
+                {{ book.book_publisher }}<br>
+                </div>
+                </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-1"></div>
+            <div class="col-md-6">您还没有借过图书！</div>
+        {% endif %}
+        </div>
+        <hr>
+        <h3>借书记录</h3>
+        <div class="row">
+        {% if book_returned_set %}
+            {% for book in book_returned_set%}
+                <div class="col-xs-6 col-md-3" style="width:20%">
+                <div class="thumbnail" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                <a href="book/isbn/{{ book.isbn }}">
+                <img src="{{ book.thumb_url }}">
+                {{ book.book_title }} <br>
+                </a>
+                {{ book.book_author }} <br>
+                {{ book.book_publisher }}<br>
+                </div>
+                </div>
+            {% endfor %}
+         {% else %}
+            <div class="col-md-1"></div>
+            <div class="col-md-6">您还没有借过图书！</div>
+        {% endif %}
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block slide %}
+<div class="panel panel-default">
+<div class="panel-body">
+    {% if user %}
+        {% block user-info %}
+        <strong>昵称:&nbsp;</strong>
+        {{ user.username }}&nbsp;
+        (<a href="/logout">退出</a>)
+        <br>
+{#        <Strong>邮箱:&nbsp;</Strong>#}
+{#        {{ user.email }}#}
+        {% endblock %}
+    {% endif%}
+    <hr>
+
+    {% block book-read-count %}
+        <strong>在读</strong>
+    {% if book_reading %}
+        ({{ book_reading.count }})
+        {% for book in book_reading %}
+            <p>
+                <li>
+                <a href="/book/isbn/{{ book.isbn }}">
+                    {{ book.book_title }}
+                </a>
+                </li>
+            </p>
+        {% endfor %}
+    {% else %}
+        {{ "(0)" }}
+    {% endif %}
+    {% endblock %}
+    <hr>
+
+    {% block book-returned-count %}
+        <strong>借书记录</strong>
+        {% if book_returned_set %}
+            ({{ book_returned_set|length }})
+            {% for book in book_returned_set %}
+                <p>
+                    <li>
+                    <a href="/book/isbn/{{ book.isbn }}">
+                        {{ book.book_title }}
+                    </a>
+                    </li>
+                </p>
+            {% endfor %}
+        {% else %}
+            {{ "(0)" }}
+        {% endif %}
+    {% endblock %}
+</div>
+</div>
+{% endblock %}
+

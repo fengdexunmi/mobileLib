@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block book-list %}
+    <div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-md-4">
+            <h4>登录</h4>
+            <form role="form" method="POST" action="/signin/">{% csrf_token %}
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" name="username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password" >密码</label>
+                    <input type="password" name="password" class="form-control">
+                <p class="help-text" style="color: indianred">{{ state }}</p>
+                </div>
+
+                <button type="submit" class="btn btn-success">登录</button>&nbsp;
+                <a href="/signup">没有帐号,点此注册</a>
+            </form>
+         </div>
+    </div>
+    </div>
+{% endblock %}
+

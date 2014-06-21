@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% extends 'admin/change_form.html' %}
+
+{% block extrahead %}
+    <script type="text/javascript" language="javascript" src="/static/js/jquery.min.js"></script>
+    <script language="javascript">
+        $(document).ready(function(){
+            $("#id_isbn").after("<span>输入10位或13位ISBN后回车，系统将自动获取图书信息</span>");
+            $(":input").keypress(function(e) {
+                var key = e.which;
+                if (13 == key) {
+                    e.preventDefault();
+                    if(this.id=="id_isbn"){
+                        fnFromDouban();
+                    }
+{#                    var index = $(":input").index(this);#}
+                    {# var newIndex = index + 1;#}
+                    {# $(":input:eq(" + index + ")").focus();#}
+                }
+            });
+        });
+
+        function fnFromDouban(){
+            var reg=/^(\d{10}|\d{13})$/;
+            var isbn = $("#id_isbn").get(0).value
+            var url = "http://api.douban.com/v2/book/isbn/"+isbn+"?alt=xd&callback=?"
+            if(!reg.test($("#id_isbn").val())){
+                alert("正确的ISBN号应该为10位或13位！");
+                return false;
+            }
+
+            $.getJSON(url,
+                function(list){
+                    $("#id_book_title").val(list.title ? list.title : "");
+                    $("#id_book_summary").val(list.summary ? list.summary : "--");
+                    $("#id_book_author").val(list.author[0] ? list.author[0] : "--" );
+                    $("#id_book_publisher").val(list.publisher ? list.publisher : "--" );
+                    $("#id_pub_date").val(list.pubdate ? list.pubdate : "--" );
+                    $("#id_thumb_url").val(list.image)
+                }
+            );
+            return true;
+        }
+    </script>
+{% endblock %}
