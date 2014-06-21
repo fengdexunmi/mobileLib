@@ -4,6 +4,10 @@ mobileLib
 This project is a mobile library system for 
 user.
 
+演示网站：book.endselect.com
+
+Android应用：测试中，后期会将源码放到gihub上
+
 项目名称：书童
 
 项目概述：为了方便广大用户从图书馆借书阅读并管理自己的书籍，该项目为用户设计了一整套移动图书管理系统，
