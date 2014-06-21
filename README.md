@@ -4,7 +4,7 @@ mobileLib
 This project is a mobile library system for 
 user.
 
-演示网站：book.endselect.com
+演示网站：http://book.endselect.com
 
 Android应用：测试中，后期会将源码放到gihub上
 
