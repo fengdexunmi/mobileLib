@@ -2,7 +2,7 @@ mobileLib
 =========
 
 This project is a mobile library system for 
-user.
+user， which uses Django\Tatsypie\Android for technology support.
 
 演示网站：http://book.endselect.com
 
