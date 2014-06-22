@@ -18,6 +18,6 @@ Android应用：测试中，后期会将源码放到gihub上
 
 移动端功能实现：用户登录、用户注册、在读图书、借书记录、查看图书详情、查看读书笔记、扫码借书、扫描还书
 
-网页端技术实现：Django（https://www.djangoproject.com/）开发; Tastypie（http://http://tastypieapi.org/）开发WebService API, 方便移动端获取（GET）、发表（POST）和更新（PATCH）数据
+网页端技术实现：Django（https://www.djangoproject.com/ ）开发; Tastypie（http://http://tastypieapi.org/ ）开发WebService API, 方便移动端获取（GET）、发表（POST）和更新（PATCH）数据
 
 移动端技术实现: 基于Android开发原生应用
